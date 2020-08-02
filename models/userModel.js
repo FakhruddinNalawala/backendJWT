@@ -6,25 +6,19 @@ import mongoose, {
  * Create database scheme for users
  */
 const UserSchema = new Schema({
-    userID:
-    {
-        type: String,
-        required,
-        unique
-    },
     username: {
         type: String,
-        required,
-        unique
+        required: true,
+        unique: true
     },
     email: {
         type: String,
-        required,
-        unique
+        required: true,
+        unique: true
     },
     password: {
         type: String,
-        required
+        required: true
     },
     createDate: {
         type: Date,

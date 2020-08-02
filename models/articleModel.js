@@ -4,42 +4,41 @@ import mongoose, {
 
 import TopicSchema from './topicModel';
 import UserSchema from './userModel';
+import TagsSchema from './tagsModel'
 
 /**
  * Create database scheme for Articles
  */
 const ArticleSchema = new Schema({
-    articleID: {
-        type: String,
-        required,
-        unique
-    },
     topicID: {
-        type: TopicSchema,
-        required
+        type: Schema.Types.ObjectId, 
+        ref: 'Topic',
+        required: true
     },
     creatorID: {
-        type: UserSchema,
-        required
+        type: Schema.Types.ObjectId, 
+        ref: 'User',
+        required: true
     },
     title: {
         type: String,
-        required
+        required: true
     },
     image: {
         type: String
     },
     content: {
         type: String,
-        required
+        required: true
     },
     isFeatured: {
         type: Boolean,
         default: false
     },
-    tags: {
-        type: [String]
-    },
+    tags: [{
+        type: Schema.Types.ObjectId, 
+        ref: 'Tags'
+    }],
     viewCount: {
         type: Number,
         default: 0

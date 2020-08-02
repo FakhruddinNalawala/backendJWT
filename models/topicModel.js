@@ -9,25 +9,22 @@ import UserSchema from './userModel';
  * Create database scheme for Topics
  */
 const TopicSchema = new Schema({
-    topicID: {
-        type: String,
-        required,
-        unique
-    },
     topicName: {
         type: String,
-        required,
-        unique
+        required: true,
+        unique: true
     },
     topicImage: {
         type: String
     },
-    articleID: {
-        type: [ArticleSchema]
-    },
+    articleID: [{
+        type: Schema.Types.ObjectId, 
+        ref: 'Article'
+    }],
     creatorID: {
-        type: UserSchema,
-        required
+        type: Schema.Types.ObjectId, 
+        ref: 'User',
+        required: true
     },
     isDeleted: {
         type: Boolean,
