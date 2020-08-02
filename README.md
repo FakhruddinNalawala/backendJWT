@@ -32,3 +32,12 @@
 
 1. Create a binary tree representation of the Articles based on the count. 
 2. When an article is deleted, update the tree representation.
+
+
+
+# Future Updates:
+
+1. Hash Password instead of storing directly
+2. Add delete
+3. Add Validation
+4. Add test cases in Mocha(?)
