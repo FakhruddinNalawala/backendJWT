@@ -3,9 +3,6 @@ import User from '../models/userModel';
 import Topic from '../models/topicModel';
 import jwt from 'jsonwebtoken';
 
-const jwtKey = 'a_secret_key';
-const jwtTimePeriod = 300;
-
 module.exports = {
 
     create: async (req, res) => {

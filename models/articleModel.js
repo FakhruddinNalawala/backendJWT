@@ -47,7 +47,7 @@ const ArticleSchema = new Schema({
         type: Date,
         default: new Date
     },
-    isDeactivated: {
+    isDeleted: {
         type: Boolean,
         default: false
     }

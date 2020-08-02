@@ -3,7 +3,7 @@ import User from '../models/userModel';
 import jwt from 'jsonwebtoken';
 
 const jwtKey = 'a_secret_key';
-const jwtTimePeriod = 300;
+const jwtTimePeriod = 600;
 
 module.exports = {
 
@@ -25,7 +25,7 @@ module.exports = {
         createdUser.save(err => {
             if (err) return res.status(500).send(err);
             return res.status(200).send(createdUser);
-        })
+        });
         // } 
         // catch (error) {
         //     return res.json(error);
@@ -45,14 +45,14 @@ module.exports = {
         }
 
         // Check if admin exists
-        id = req.body.adminID;
-        let admin = await User.findById({ id });
+        let id = req.body.adminID;
+        let admin = await User.findById(id);
         if (!admin) return res.status(401).send({ 'error': "Admin Doesn't exist" });
-        if (!admin.isAdmin) return res.status(400).send({ 'error': "User is not admin", 'user': admin })
+        if (!admin.isAdmin) return res.status(400).send({ 'error': "User is not admin", 'user': admin });
 
         // Check if user exists
-        let id = req.body.userID;
-        let user = await User.findById({ id });
+        id = req.body.userID;
+        let user = await User.findById(id);
         if (!user) return res.status(200).send({ 'error': "User doesn't exist" });
 
         User.findByIdAndUpdate(id, { isAdmin: true }, { new: true }, (err, newAdmin) => {
@@ -69,17 +69,19 @@ module.exports = {
         // try {
         const { username, password } = req.body;
 
-        let user = await User.findOne({ username: req.body.username, password: req.body.password });
-        if (!user) return res.status({ 'Error': 'Invalid credentials' });
+        User.findOne({ username: req.body.username, password: req.body.password }, (err, user) => {
+            if (err) return res.status(500).send(err);
+            if (!user) return res.status(400).send({ 'Error': 'Invalid credentials' });
 
-        const token = jwt.sign({ username }, jwtKey, {
-            algorithm: "HS256",
-            expiresIn: jwtTimePeriod,
+            const token = jwt.sign({ username }, jwtKey, {
+                algorithm: "HS256",
+                expiresIn: jwtTimePeriod,
+            });
+            console.log("Generated Token", token);
+
+            res.cookie("token", token, { maxAge: jwtTimePeriod * 1000 })
+            return res.json({ 'Status': 'Login successful, JSON Web Token Generated' })
         });
-        console.log("Generated Token", token);
-
-        res.cookie("token", token, { maxAge: jwtTimePeriod * 1000 })
-        return res.json({ 'Status': 'Login successful, JSON Web Token Generated' })
 
     }
     // } 
