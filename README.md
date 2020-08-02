@@ -32,9 +32,9 @@
 
 1. Create a binary tree representation of the Articles based on the count. 
 2. When an article is deleted, update the tree representation.
-
-
-
+<br />
+<br />
+<br />
 # Future Updates:
 
 1. Hash Password instead of storing directly
